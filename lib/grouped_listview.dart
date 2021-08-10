@@ -1,8 +1,10 @@
 library grouped_listview;
 
 import 'package:flutter/material.dart';
+
 typedef TGroup GroupFunction<TElement, TGroup>(TElement element);
-typedef Widget ListBuilderFunction<TElement>(BuildContext context, TElement element);
+typedef Widget ListBuilderFunction<TElement>(
+    BuildContext context, TElement element);
 typedef Widget GroupBuilderFunction<TGroup>(BuildContext context, TGroup group);
 
 class GroupedListView<TElement, TGroup> extends StatelessWidget {
@@ -11,15 +13,16 @@ class GroupedListView<TElement, TGroup> extends StatelessWidget {
   final ListBuilderFunction<TElement> listBuilder;
   final GroupBuilderFunction<TGroup> groupBuilder;
 
-  final List<dynamic> _flattenedList = List();
+  final List<dynamic> _flattenedList = [];
 
-  GroupedListView(
-      {@required this.collection,
-        @required this.groupBy,
-        @required this.listBuilder,
-        @required this.groupBuilder}) {
-
-    _flattenedList.addAll(Grouper<TElement, TGroup>().groupList(collection, groupBy));
+  GroupedListView({
+    required this.collection,
+    required this.groupBy,
+    required this.listBuilder,
+    required this.groupBuilder,
+  }) {
+    _flattenedList
+        .addAll(Grouper<TElement, TGroup>().groupList(collection, groupBy));
   }
 
   @override
@@ -40,17 +43,15 @@ class GroupedListView<TElement, TGroup> extends StatelessWidget {
 class Grouper<TElement, TGroup> {
   final Map<TGroup, List<TElement>> _groupedList = {};
 
-  List<dynamic> groupList(List<TElement> collection, GroupFunction<TElement, TGroup> groupBy) {
-    if (collection == null) throw ArgumentError("Collection can not be null");
-    if (groupBy == null) throw ArgumentError("GroupBy function can not be null");
-
-    List flattenedList = List();
+  List<dynamic> groupList(
+      List<TElement> collection, GroupFunction<TElement, TGroup> groupBy) {
+    List flattenedList = [];
     collection.forEach((element) {
       var key = groupBy(element);
       if (!_groupedList.containsKey(key)) {
-        _groupedList[key] = List<TElement>();
+        _groupedList[key] = <TElement>[];
       }
-      _groupedList[key].add(element);
+      _groupedList[key]!.add(element);
     });
     _groupedList.forEach((key, list) {
       flattenedList.add(key);
