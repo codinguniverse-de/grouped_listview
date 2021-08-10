@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:grouped_listview/grouped_listview.dart';
 
 void main() {
-  Grouper<TestClass, String> cut;
+  late Grouper<TestClass, String> cut;
   var groupBy = (TestClass c) {
     return c.group;
   };
@@ -25,22 +25,11 @@ void main() {
   });
 
   test('empty list returns empty list', () {
-    var collection = List<TestClass>();
+    var collection = <TestClass>[];
 
     var result = cut.groupList(collection, groupBy);
 
     expect(result.length, 0);
-  });
-
-  test('null list throws argument error', () {
-    var collection;
-
-    expect(() => cut.groupList(collection, groupBy), throwsArgumentError);
-  });
-
-  test('groupby function is null throws argument error', () {
-    var collection = <TestClass>[TestClass(1, "Test")];
-    expect(() => cut.groupList(collection, null), throwsArgumentError);
   });
 
   test('Valid data returns correct amount of elements', () {

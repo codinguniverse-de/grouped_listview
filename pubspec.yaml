@@ -1,11 +1,11 @@
 name: grouped_listview
 description: Simple Flutter widget to display grouped ListView
-version: 0.0.2
+version: 0.0.3
 author: Sören Christ <s.christ@mailbox.org>
 homepage: https://github.com/codinguniverse-de/grouped_listview
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
